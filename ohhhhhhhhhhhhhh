@@ -1,0 +1,46 @@
+loadstring(game:HttpGet("-- 九一脚本
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+
+-- 创建主窗口
+local Window = WindUI:CreateWindow({
+    Title = "九一脚本 - 专业版",
+    Icon = "crown",
+    Author = "九一开发者",
+    Folder = "NineOneScript",
+    Theme = "Dark",
+    Size = UDim2.fromOffset(400, 320),
+    Transparent = true,
+    Resizable = true,
+    SideBarWidth = 180,
+    BackgroundImageTransparency = 0.3,
+    HideSearchBar = false,
+    ScrollBarEnabled = true,
+
+    User = {
+        Enabled = true,
+        Anonymous = false,
+        Callback = function()
+            Window:Notify("欢迎使用九一脚本!", "版本 2.0.1 - 免费版")
+        end,
+    }
+})
+
+-- 创建标签页
+local MainTab = Window:CreateTab({
+    Name = "主要功能",
+    Icon = "home"
+})
+
+local PlayerTab = Window:CreateTab({
+    Name = "玩家功能",
+    Icon = "user"
+})
+
+local SettingsTab = Window:CreateTab({
+    Name = "设置",
+    Icon = "settings"
+})
+
+-- 战斗功能
+local CombatSection = MainTab:CreateSection("战斗功能")
+Com"))()
