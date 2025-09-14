@@ -1,0 +1,464 @@
+loadstring(game:HttpGet("<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WU10 / SCRIPT HUB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 2.2rem;
+            margin-left: 15px;
+            background: linear-gradient(90deg, #00c9ff, #92fe9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: #00c9ff;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-info .username {
+            font-weight: bold;
+            color: #00c9ff;
+        }
+        
+        .user-info .game {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #00c9ff;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            background: rgba(0, 201, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .nav-item.active {
+            background: rgba(0, 201, 255, 0.2);
+            border-left: 4px solid #00c9ff;
+        }
+        
+        .nav-item i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: #00c9ff;
+            width: 25px;
+            text-align: center;
+        }
+        
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .function-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .function-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 201, 255, 0.3);
+        }
+        
+        .function-card i {
+            font-size: 2rem;
+            color: #00c9ff;
+            margin-bottom: 15px;
+        }
+        
+        .function-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .function-card p {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .game-section {
+            margin-top: 30px;
+        }
+        
+        .game-cards {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 5px;
+        }
+        
+        .game-card {
+            flex: 0 0 auto;
+            width: 200px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .game-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .game-card-content {
+            padding: 15px;
+        }
+        
+        .game-card h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .game-card p {
+            color: #a0a0a0;
+            font-size: 0.8rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 201, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #00c9ff;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-cube logo-icon"></i>
+                <h1>WU10 / SCRIPT HUB</h1>
+            </div>
+            <div class="user-info">
+                <div class="username">@rooml139</div>
+                <div class="game">盗墓王</div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <h2>导航</h2>
+                <div class="nav-item active" data-tab="home">
+                    <i class="fas fa-home"></i>
+                    <span>主页</span>
+                </div>
+                <div class="nav-item" data-tab="server">
+                    <i class="fas fa-server"></i>
+                    <span>切换服务器</span>
+                </div>
+                <div class="nav-item" data-tab="general">
+                    <i class="fas fa-cogs"></i>
+                    <span>通用功能区</span>
+                </div>
+                <div class="nav-item" data-tab="doors">
+                    <i class="fas fa-door-open"></i>
+                    <span>Doors</span>
+                </div>
+                <div class="nav-item" data-tab="pressure">
+                    <i class="fas fa-weight-hanging"></i>
+                    <span>压力</span>
+                </div>
+                <div class="nav-item" data-tab="inkgame">
+                    <i class="fas fa-paint-brush"></i>
+                    <span>Ink Game</span>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="tab-content active" id="home-tab">
+                    <h2>主页</h2>
+                    <p>欢迎使用 WU10 脚本中心。请选择您需要的功能。</p>
+                    
+                    <div class="function-grid">
+                        <div class="function-card">
+                            <i class="fas fa-sync-alt"></i>
+                            <h3>重新加入服务器</h3>
+                            <p>重新加入当前服务器</p>
+                        </div>
+                        <div class="function-card">
+                            <i class="fas fa-copy"></i>
+                            <h3>复制服务器ID</h3>
+                            <p>复制当前服务器ID到剪贴板</p>
+                        </div>
+                        <div class="function-card">
+                            <i class="fas fa-info-circle"></i>
+                            <h3>服务器信息</h3>
+                            <p>显示当前服务器的信息</p>
+                        </div>
+                    </div>
+                    
+                    <div class="game-section">
+                        <h2>热门游戏</h2>
+                        <div class="game-cards">
+                            <div class="game-card">
+                                <img src="https://via.placeholder.com/200x120/0f3460/ffffff?text=Doors" alt="Doors">
+                                <div class="game-card-content">
+                                    <h3>Doors</h3>
+                                    <p>恐怖逃生游戏</p>
+                                </div>
+                            </div>
+                            <div class="game-card">
+                                <img src="https://via.placeholder.com/200x120/0f3460/ffffff?text=Pressure" alt="Pressure">
+                                <div class="game-card-content">
+                                    <h3>Pressure</h3>
+                                    <p>生存挑战游戏</p>
+                                </div>
+                            </div>
+                            <div class="game-card">
+                                <img src="https://via.placeholder.com/200x120/0f3460/ffffff?text=Ink+Game" alt="Ink Game">
+                                <div class="game-card-content">
+                                    <h3>Ink Game</h3>
+                                    <p>创意绘画游戏</p>
+                                </div>
+                            </div>
+                            <div class="game-card">
+                                <img src="https://via.placeholder.com/200x120/0f3460/ffffff?text=Tomb+Robber" alt="盗墓王">
+                                <div class="game-card-content">
+                                    <h3>盗墓王</h3>
+                                    <p>冒险解谜游戏</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="server-tab">
+                    <h2>切换服务器</h2>
+                    <p>切换到相同游戏的另一个服务器</p>
+                    
+                    <div class="function-grid">
+                        <div class="function-card">
+                            <i class="fas fa-random"></i>
+                            <h3>随机服务器</h3>
+                            <p>随机切换到一个服务器</p>
+                        </div>
+                        <div class="function-card">
+                            <i class="fas fa-users"></i>
+                            <h3>低延迟服务器</h3>
+                            <p>选择延迟最低的服务器</p>
+                        </div>
+                        <div class="function-card">
+                            <i class="fas fa-star"></i>
+                            <h3>推荐服务器</h3>
+                            <p>切换到推荐服务器</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="general-tab">
+                    <h2>通用功能区</h2>
+                    <p>适用于所有游戏的通用功能</p>
+                    
+                    <div class="function-grid">
+                        <div class="function-card">
+                            <i class="fas fa-user-secret"></i>
+                            <h3>隐身模式</h3>
+                            <p>对其他玩家隐藏您的在线状态</p>
+                        </div>
+                        <div class="function-card">
+                            <i class="fas fa-bolt"></i>
+                            <h3>速度提升</h3>
+                            <p>增加角色移动速度</p>
+                        </div>
+                        <div class="function-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>无敌模式</h3>
+                            <p>暂时获得无敌状态</p>
+                        </div>
+                        <div class="function-card">
+                            <i class="fas fa-coins"></i>
+                            <h3>货币获取</h3>
+                            <p>获取游戏内货币</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>WU10 Script Hub © 2025 | 仅用于教育目的</p>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        功能已激活！
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 选项卡切换功能
+            const navItems = document.querySelectorAll('.nav-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // 更新活动导航项
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 显示对应内容
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // 功能卡片点击效果
+            const functionCards = document.querySelectorAll('.function-card');
+            const notification = document.getElementById('notification');
+            
+            functionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 显示通知
+                    notification.classList.add('show');
+                    
+                    // 3秒后隐藏通知
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000);
+                });
+            });
+            
+            // 模拟一些动态效果
+            setInterval(() => {
+                const randomCard = functionCards[Math.floor(Math.random() * functionCards.length)];
+                randomCard.style.borderColor = 'rgba(0, 201, 255, 0.5)';
+                
+                setTimeout(() => {
+                    randomCard.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                }, 1000);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>"))()
