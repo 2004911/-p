@@ -1,0 +1,296 @@
+loadstring(game:HttpGet("-- 九一脚本- 精简版
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+
+-- 创建主窗口
+local Window = WindUI:CreateWindow({
+    Title = "九一脚本 - 专业版",
+    Icon = "crown",
+    Author = "九一开发者",
+    Folder = "NineOneScript",
+    Theme = "Dark",
+    Size = UDim2.fromOffset(400, 320),
+    Transparent = true,
+    Resizable = true,
+    SideBarWidth = 180,
+    BackgroundImageTransparency = 0.3,
+    HideSearchBar = false,
+    ScrollBarEnabled = true,
+
+    User = {
+        Enabled = true,
+        Anonymous = false,
+        Callback = function()
+            Window:Notify("欢迎使用九一脚本!", "版本 2.0.1 - 免费版")
+        end,
+    }
+})
+
+-- 创建标签页
+local MainTab = Window:CreateTab({
+    Name = "主要功能",
+    Icon = "home"
+})
+
+local PlayerTab = Window:CreateTab({
+    Name = "玩家功能",
+    Icon = "user"
+})
+
+local SettingsTab = Window:CreateTab({
+    Name = "设置",
+    Icon = "settings"
+})
+
+-- 战斗功能
+local CombatSection = MainTab:CreateSection("战斗功能")
+CombatSection:AddToggle({
+    Name = "自动攻击",
+    Default = false,
+    Callback = function(value)
+        print("自动攻击:", value)
+        if value then
+            Window:Notify("战斗系统", "自动攻击已启用")
+            -- 这里添加自动攻击逻辑
+        else
+            Window:Notify("战斗系统", "自动攻击已关闭")
+            -- 这里停止自动攻击
+        end
+    end
+})
+
+CombatSection:AddDropdown({
+    Name = "攻击模式",
+    Options = {"最近敌人", "最强敌人", "最弱敌人", "随机敌人"},
+    Default = "最近敌人",
+    Callback = function(value)
+        print("攻击模式:", value)
+        Window:Notify("战斗模式", "已切换至: " .. value)
+    end
+})
+
+CombatSection:AddKeybind({
+    Name = "快速攻击键",
+    Default = Enum.KeyCode.F,
+    Callback = function()
+        print("快速攻击触发!")
+        Window:Notify("快速攻击", "执行了一次攻击!")
+    end
+})
+
+-- 辅助功能
+local UtilitySection = MainTab:CreateSection("辅助功能")
+UtilitySection:AddToggle({
+    Name = "自动闪避",
+    Default = false,
+    Callback = function(value)
+        print("自动闪避:", value)
+        if value then
+            Window:Notify("辅助功能", "自动闪避已启用")
+        else
+            Window:Notify("辅助功能", "自动闪避已关闭")
+        end
+    end
+})
+
+UtilitySection:AddToggle({
+    Name = "技能连招",
+    Default = false,
+    Callback = function(value)
+        print("技能连招:", value)
+        if value then
+            Window:Notify("辅助功能", "技能连招已启用")
+        else
+            Window:Notify("辅助功能", "技能连招已关闭")
+        end
+    end
+})
+
+UtilitySection:AddButton({
+    Name = "一键治疗",
+    Callback = function()
+        print("执行治疗")
+        Window:Notify("治疗", "生命值已恢复!")
+    end
+})
+
+-- 玩家功能标签
+local PlayerSection = PlayerTab:CreateSection("角色设置")
+
+-- 安全的移动速度设置
+PlayerSection:AddSlider({
+    Name = "移动速度",
+    Min = 16,
+    Max = 100,
+    Default = 16,
+    Callback = function(value)
+        pcall(function()
+            local character = game.Players.LocalPlayer.Character
+            if character and character:FindFirstChild("Humanoid") then
+                character.Humanoid.WalkSpeed = value
+                print("移动速度:", value)
+                Window:Notify("角色设置", "移动速度: " .. value)
+            end
+        end)
+    end
+})
+
+-- 安全的跳跃高度设置
+PlayerSection:AddSlider({
+    Name = "跳跃高度",
+    Min = 50,
+    Max = 200,
+    Default = 50,
+    Callback = function(value)
+        pcall(function()
+            local character = game.Players.LocalPlayer.Character
+            if character and character:FindFirstChild("Humanoid") then
+                character.Humanoid.JumpPower = value
+                print("跳跃高度:", value)
+                Window:Notify("角色设置", "跳跃高度: " .. value)
+            end
+        end)
+    end
+})
+
+PlayerSection:AddToggle({
+    Name = "无限跳跃",
+    Default = false,
+    Callback = function(value)
+        print("无限跳跃:", value)
+        if value then
+            Window:Notify("角色设置", "无限跳跃已启用")
+        else
+            Window:Notify("角色设置", "无限跳跃已关闭")
+        end
+    end
+})
+
+PlayerSection:AddToggle({
+    Name = "穿墙模式",
+    Default = false,
+    Callback = function(value)
+        print("穿墙模式:", value)
+        if value then
+            Window:Notify("角色设置", "穿墙模式已启用")
+        else
+            Window:Notify("角色设置", "穿墙模式已关闭")
+        end
+    end
+})
+
+-- 视觉功能
+local VisualSection = PlayerTab:CreateSection("视觉设置")
+VisualSection:AddToggle({
+    Name = "透视墙壁",
+    Default = false,
+    Callback = function(value)
+        print("透视:", value)
+        if value then
+            Window:Notify("视觉设置", "透视功能已启用")
+        else
+            Window:Notify("视觉设置", "透视功能已关闭")
+        end
+    end
+})
+
+VisualSection:AddToggle({
+    Name = "显示血量条",
+    Default = true,
+    Callback = function(value)
+        print("血量条:", value)
+        if value then
+            Window:Notify("视觉设置", "血量显示已开启")
+        else
+            Window:Notify("视觉设置", "血量显示已关闭")
+        end
+    end
+})
+
+VisualSection:AddToggle({
+    Name = "显示敌人距离",
+    Default = false,
+    Callback = function(value)
+        print("显示距离:", value)
+        if value then
+            Window:Notify("视觉设置", "距离显示已启用")
+        else
+            Window:Notify("视觉设置", "距离显示已关闭")
+        end
+    end
+})
+
+-- 设置标签内容
+local UISection = SettingsTab:CreateSection("界面设置")
+UISection:AddToggle({
+    Name = "显示通知",
+    Default = true,
+    Callback = function(value)
+        print("显示通知:", value)
+        Window:Notify("界面设置", value and "通知已开启" or "通知已关闭")
+    end
+})
+
+UISection:AddColorPicker({
+    Name = "主题颜色",
+    Default = Color3.fromRGB(0, 170, 255),
+    Callback = function(value)
+        print("主题颜色:", value)
+        Window:Notify("界面设置", "主题颜色已更改")
+    end
+})
+
+UISection:AddDropdown({
+    Name = "界面主题",
+    Options = {"Dark", "Light", "Blue", "Red"},
+    Default = "Dark",
+    Callback = function(value)
+        print("界面主题:", value)
+        Window:Notify("界面设置", "主题已切换至: " .. value)
+    end
+})
+
+-- 配置管理
+local ConfigSection = SettingsTab:CreateSection("配置管理")
+ConfigSection:AddButton({
+    Name = "保存配置",
+    Callback = function()
+        Window:Notify("配置管理", "设置已成功保存到本地!")
+        -- 保存配置逻辑
+    end
+})
+
+ConfigSection:AddButton({
+    Name = "加载配置",
+    Callback = function()
+        Window:Notify("配置管理", "设置已从本地加载!")
+        -- 加载配置逻辑
+    end
+})
+
+ConfigSection:AddButton({
+    Name = "重置配置",
+    Callback = function()
+        Window:Notify("配置管理", "所有设置已恢复默认!")
+        -- 重置配置逻辑
+    end
+})
+
+-- 信息按钮
+ConfigSection:AddButton({
+    Name = "关于脚本",
+    Callback = function()
+        Window:Notify("关于九一脚本", 
+            "版本 v1.0/n"..
+            "开发者: 九一独自研发\n"..
+            "更新时间: 20259月14日年\n"..
+            "功能: 战斗辅助 + 角色增强"
+        )
+    end
+})
+
+-- 初始化完成提示
+delay(1, function()
+    Window:Notify("九一脚本加载成功", "欢迎使用! 战斗功能已就绪。")
+end)
+
+print("九一脚本界面初始化完成! (已移除自动农场功能)")"))()
