@@ -1,0 +1,105 @@
+-- 加载 MindUI 主库
+local MindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/MindUI/main/dist/main.lua"))()
+
+-- 注册自定义 key 验证服务
+MindUI.Services.mysuperservicetogetkey = {
+    Name = "虎脚本",
+    Icon = "droplet",
+    Args = { "ServiceId" },
+    New = function(ServiceId)
+        function validateKey(key)
+            if not key then
+                return false, "Key is invalid"
+            end
+            return true, "Key is valid"
+        end
+        
+        function copyLink()
+            setclipboard("link to key system service.")
+        end
+        
+        return {
+            Verify = validateKey,
+            Copy = copyLink
+        }
+    end
+}
+
+-- 创建主窗口
+local Window = MindUI.CreateWindow({
+    Title = "虎脚本",
+    Icon = "crown",
+    Author = "酷狗",
+    Folder = "MyTestHub",
+    Theme = "Dark",
+    Size = UDim2.fromOffset(350, 270),
+    Transparent = true,
+    Resizable = true,
+    SideBarWidth = 200,
+    BackgroundImageTransparency = 0.42,
+    HideSearchBar = true,
+    ScrollBarEnabled = false,
+    
+    User = {
+        Enabled = true,
+        Anonymous = true,
+        Callback = function()
+            print("clicked user icon")
+        end
+    },
+    
+    KeySystem = {
+        Note = "Example Key System. With your custom service.",
+        API = {
+            Type = "mysuperservicetogetkey",
+            ServiceId = 1234
+        }
+    }
+})
+
+-- 设置窗口背景（使用黑色背景图片）
+Window.SetBackgroundImage("rbxassetid://13281599212") -- 纯黑色背景图片ID
+Window.SetBackgroundImageTransparency(0.5)
+Window.SetToggleKey(Enum.KeyCode.H)
+Window.ToggleTransparency(true)
+Window.IsResizable(false)
+
+-- 添加按钮
+Window.Button({
+    Title = "虎脚本中心",
+    Icon = "hand",
+    CornerRadius = UDim.new(0, 16),
+    StrokeThickness = 7,
+    Callback = function()
+        print("按钮被点击")
+    end
+})
+
+-- 添加功能按钮
+Window.Button({
+    Title = "功能一",
+    Icon = "zap",
+    Callback = function()
+        print("功能一激活")
+    end
+})
+
+Window.Button({
+    Title = "功能二", 
+    Icon = "shield",
+    Callback = function()
+        print("功能二激活")
+    end
+})
+
+-- 只保留速度调整滑动条
+Window.Slider({
+    Title = "速度调整",
+    Icon = "gauge",
+    Min = 0,
+    Max = 100,
+    Default = 50,
+    Callback = function(value)
+        print("速度设置为:", value)
+    end
+})
